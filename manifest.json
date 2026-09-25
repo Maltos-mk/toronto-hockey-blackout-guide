@@ -1,14 +1,14 @@
 {
-  "name": "Hockey Broadcast & Blackout Guide",
-  "short_name": "Hockey Guide",
-  "description": "Independent Canadian hockey broadcast schedule and regional blackout calculator.",
+  "name": "Toronto Hockey Broadcast & Blackout Guide",
+  "short_name": "Toronto Guide",
+  "description": "Independent Toronto Maple Leafs broadcast schedule and regional blackout calculator.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0f172a",
+  "theme_color": "#00205B",
   "icons": [
     {
-      "src": "shared/favicon.svg",
+      "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }
