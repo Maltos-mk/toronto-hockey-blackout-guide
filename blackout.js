@@ -7,8 +7,19 @@ window.evaluateGame = function(g, state) {
   let reasonFR = 'No French Broadcast';
   let isBlackedOutFR = false;
 
-  // Toronto region is 'regional_tor'
-  if (g.netEN && (g.netEN.includes('Sportsnet') || g.netEN.includes('HNIC'))) {
+  if (g.netEN === 'Sportsnet Ontario' || (g.type === 'regional_tor' && g.netEN.includes('Sportsnet'))) {
+    if (state.region === 'in_market') {
+      if (state.subs.sn || state.subs.sn_prem) { canEN = true; reasonEN = 'Watch on Sportsnet Ontario'; }
+      else { reasonEN = 'Requires Sportsnet+'; }
+    } else if (state.region === 'us_intl') {
+      if (state.subs.espn) { canEN = true; reasonEN = 'Watch on ESPN+ / NHL.tv'; }
+      else { reasonEN = 'Requires ESPN+ / NHL.tv'; }
+    } else {
+      isBlackedOutEN = true;
+      if (state.subs.sn_prem) { canEN = true; reasonEN = 'Watch on Sportsnet+ PREMIUM'; isBlackedOutEN = false; }
+      else { reasonEN = 'BLACKED OUT outside territory. Requires Sportsnet+ Premium or Centre Ice.'; }
+    }
+  } else if (g.netEN && (g.netEN === 'Sportsnet' || g.netEN.includes('HNIC') || (g.type === 'national' && g.netEN.includes('Sportsnet')))) {
     if (state.region === 'us_intl') {
       if (state.subs.espn) { canEN = true; reasonEN = 'Watch on ESPN+ / NHL.tv'; }
       else { reasonEN = 'Requires ESPN+ / NHL.tv'; }
@@ -28,19 +39,7 @@ window.evaluateGame = function(g, state) {
       if (state.subs.sn_prem) { canEN = true; reasonEN = 'Watch on Sportsnet+ PREMIUM'; isBlackedOutEN = false; }
       else { reasonEN = 'BLACKED OUT outside territory. Requires Sportsnet+ Premium or Centre Ice.'; }
     }
-  } else if (g.netEN === 'Sportsnet Ontario') {
-    if (state.region === 'in_market') {
-      if (state.subs.sn || state.subs.sn_prem) { canEN = true; reasonEN = 'Watch on Sportsnet Ontario'; }
-      else { reasonEN = 'Requires Sportsnet+'; }
-    } else if (state.region === 'us_intl') {
-      if (state.subs.espn) { canEN = true; reasonEN = 'Watch on ESPN+ / NHL.tv'; }
-      else { reasonEN = 'Requires ESPN+ / NHL.tv'; }
-    } else {
-      isBlackedOutEN = true;
-      if (state.subs.sn_prem) { canEN = true; reasonEN = 'Watch on Sportsnet+ PREMIUM'; isBlackedOutEN = false; }
-      else { reasonEN = 'BLACKED OUT outside territory. Requires Sportsnet+ Premium or Centre Ice.'; }
-    }
-  } else if (g.netEN.includes('Prime')) {
+  } else if (g.netEN && g.netEN.includes('Prime')) {
     if (state.region === 'us_intl') {
       if (state.subs.espn) { canEN = true; reasonEN = 'Watch on ESPN+ / NHL.tv'; }
       else { reasonEN = 'Requires ESPN+ / NHL.tv'; }
